@@ -46,16 +46,16 @@ class Coord2Dist(object):
         
     
 if __name__ == '__main__':
-    l2d = Coord2Dist()
+    c2d = Coord2Dist()
     x1 = [117.22082, 117.22798, 117, 118]
     y1 = [31.843278, 31.850011, 31,  31]
     x2 = [118]
     y2 = [31]
     
     
-    print l2d.coord2dist_matrix(x1, y1)
-    print l2d.coord2dist_matrix(x1, y1, x2, y2)
-    print l2d.coord2dist_scalar((118, 31), (117, 31))
+    print c2d.coord2dist_matrix(x1, y1)
+    print c2d.coord2dist_matrix(x1, y1, x2, y2)
+    print c2d.coord2dist_scalar((118, 31), (117, 31))
     
-    print l2d.dist2dx(2, center_y=60)
-    print l2d.dist2dy(2)
+    print c2d.dist2dx(2, center_y=60)
+    print c2d.dist2dy(2)
