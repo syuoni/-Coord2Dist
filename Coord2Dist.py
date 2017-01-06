@@ -16,7 +16,7 @@ class Coord2Dist(object):
         # x1 and y1 as rows, x2 and y2 as columns
         x1_vec = np.array(x1_vec)
         y1_vec = np.array(y1_vec)
-        if x2_vec == None or y2_vec == None:
+        if x2_vec is None or y2_vec is None:
             x2_vec = x1_vec
             y2_vec = y1_vec
         else:
@@ -53,9 +53,9 @@ if __name__ == '__main__':
     y2 = [31]
     
     
-    print c2d.coord2dist_matrix(x1, y1)
-    print c2d.coord2dist_matrix(x1, y1, x2, y2)
-    print c2d.coord2dist_scalar((118, 31), (117, 31))
+    print(c2d.coord2dist_matrix(x1, y1))
+    print(c2d.coord2dist_matrix(x1, y1, x2, y2))
+    print(c2d.coord2dist_scalar((118, 31), (117, 31)))
     
-    print c2d.dist2dx(2, center_y=60)
-    print c2d.dist2dy(2)
+    print(c2d.dist2dx(2, center_y=60))
+    print(c2d.dist2dy(2))
