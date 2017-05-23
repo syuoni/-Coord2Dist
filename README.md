@@ -1,5 +1,7 @@
 # tools
 
-excel_tools: excel date transformation; transfrom html to xlsx file
+excel_tools: excel date transformation; transfrom html-format files to excel files
 
-naive_html: crawl html
+naive_html: simple website crawling tools 
+
+keyword_proc: extract info from text based on a series of keywords and rules defined by users 
