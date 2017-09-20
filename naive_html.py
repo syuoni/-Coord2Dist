@@ -1,5 +1,6 @@
-# version: 2016-12-31
+# -*- coding: utf-8 -*-
 import requests
+from requests import RequestException
 from urllib.parse import urlencode
 import splinter
 import chardet
@@ -80,21 +81,24 @@ agent_list_on_windows = [
     "Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15"
 ]
 
-def get_html(url, params=None, timeout=10, agent=None, max_fails=3, res_decoding=True, sleep=0):    
+def get_html(url, params=None, timeout=10, agent=None, max_fails=3, res_decoding=True, 
+             sleep_time=0, sleep_vol=0.2):    
     for n_fail in range(max_fails):
         try:
             if agent is not None:
                 res = requests.get(url, params=params, timeout=timeout, headers={'User-Agent': agent})
             else:
                 res = requests.get(url, params=params, timeout=timeout, headers={'User-Agent': random.choice(agent_list_on_windows)})
-        except Exception as e:
+            assert res.status_code == 200
+        except (RequestException, AssertionError) as e:
             pass
         else:
             break
     else:
         return None
-    if sleep > 0:
-        time.sleep(random.uniform(0.5*sleep, 1.5*sleep))
+    if sleep_time > 0:
+        time.sleep(random.uniform(sleep_time*(1-sleep_vol), 
+                                  sleep_time*(1+sleep_vol)))
     if res_decoding:
         res.encoding = chardet.detect(res.content)['encoding']
         return res.text
