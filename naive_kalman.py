@@ -11,10 +11,12 @@ def robust_var(x, ratio=0.05, ddof=0):
     N = len(dev_x_sq)
     return np.mean(dev_x_sq[int(N*ratio):int(N*(1-ratio))]) * N / (N-ddof)
 
+
 def robust_mean(x, ratio=0.05):
     sorted_x = np.sort(x)
     N = len(sorted_x)
     return np.mean(sorted_x[int(N*ratio):int(N*(1-ratio))])
+
 
 def one_dim_kalman_filter(z_seq, measure_std_seq, proc_std, 
                           dim_x=3, x0=None, P0=None, dt=1):
@@ -77,6 +79,30 @@ def one_dim_kalman_filter(z_seq, measure_std_seq, proc_std,
     x_seq, cov_seq = np.array(x_seq), np.array(cov_seq)
     
     return x_seq[:, 0]
+    
+
+def demo():
+    N = 50
+    proc_std = 1
+    measure_std = 2
+    x_seq = np.cumsum(np.random.randn(N)*proc_std + 0.5)
+    z_seq = x_seq + np.random.randn(N)*measure_std
+    measure_std_seq = np.ones_like(z_seq) * measure_std
+    
+    filtered_seq = one_dim_kalman_filter(z_seq, measure_std_seq, proc_std, dim_x=2)
+    
+    import matplotlib.pyplot as plt
+    plt.plot(x_seq, 'k', label='real')
+    plt.plot(z_seq, 'b--', label='measured')
+    plt.plot(filtered_seq, 'r', label='filtered')
+    plt.legend()
+    plt.show()
+
+
+if __name__ == '__main__':
+    demo()
+    
+    
     
     
     
