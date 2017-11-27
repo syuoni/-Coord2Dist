@@ -82,7 +82,7 @@ agent_list_on_windows = [
 ]
 
 def get_html(url, params=None, timeout=10, agent=None, max_fails=3, res_decoding=True, 
-             sleep_time=0, sleep_vol=0.2):    
+             sleep_time=0, sleep_vol=0.2):
     for n_fail in range(max_fails):
         try:
             if agent is not None:
@@ -91,6 +91,7 @@ def get_html(url, params=None, timeout=10, agent=None, max_fails=3, res_decoding
                 res = requests.get(url, params=params, timeout=timeout, headers={'User-Agent': random.choice(agent_list_on_windows)})
             assert res.status_code == 200
         except (RequestException, AssertionError) as e:
+            print(res.status_code)
             pass
         else:
             break
@@ -105,12 +106,13 @@ def get_html(url, params=None, timeout=10, agent=None, max_fails=3, res_decoding
     else:
         return res.content
 
-def get_html_by_browser(browser, url, params=None, sleep=0):
+def get_html_by_browser(browser, url, params=None, sleep_time=0, sleep_vol=0.2):
     if params is not None:
         url = '?'.join([url, urlencode(params)])
     browser.visit(url)
-    if sleep > 0:
-        time.sleep(random.uniform(0.5*sleep, 1.5*sleep))
+    if sleep_time > 0:
+        time.sleep(random.uniform(sleep_time*(1-sleep_vol), 
+                                  sleep_time*(1+sleep_vol)))
     return browser.html
     
 
