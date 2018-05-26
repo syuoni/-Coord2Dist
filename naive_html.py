@@ -91,8 +91,8 @@ def get_html(url, params=None, timeout=10, agent=None, max_fails=3, res_decoding
                 res = requests.get(url, params=params, timeout=timeout, headers={'User-Agent': random.choice(agent_list_on_windows)})
             assert res.status_code == 200
         except (RequestException, AssertionError) as e:
-            print(res.status_code)
-            pass
+            if isinstance(e, AssertionError):
+                print(res.status_code)
         else:
             break
     else:
